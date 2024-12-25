@@ -46,9 +46,11 @@ export const useNewsStore = defineStore({
             const route = useRoute();
             const router = useRouter();
 
+            this.search = value
+
             router.push({
                 path: route.path,
-                query: {...route.query, search: value},
+                query: {...route.query, search: this.search},
             });
 
             if (!value.length) {
@@ -110,10 +112,6 @@ export const useNewsStore = defineStore({
             if (route.query.hasOwnProperty('source')) {
                 this.activeFeed = Number(route.query['source']);
             }
-            
-            if (route.query.hasOwnProperty('search')) {
-                this.search = (route.query['search'] || '').toLowerCase();
-            }
 
             this.items = [];
             
@@ -122,6 +120,7 @@ export const useNewsStore = defineStore({
                     const lowerTitle = item?.title[0].toLowerCase();
                     const lowerDescription = item.description?.length ? item.description[0].toLowerCase() : ''
                     if (lowerTitle.includes(this.search) || lowerDescription.includes(this.search)) {
+                        this.itemCounter++;
                         return true;
                     }
                     return false;
@@ -153,7 +152,6 @@ export const useNewsStore = defineStore({
                     const link = `${x.link[0].split('ru')[0]}ru`;
                     
                     if (!this.activeFeed || link === sourceMapping[this.activeFeed]) {
-                        this.itemCounter++;
                         return true;
                     }
                     return false;
@@ -166,6 +164,11 @@ export const useNewsStore = defineStore({
             }));
 
             this.data = [];
+            const route = useRoute();
+
+            if (route.query.hasOwnProperty('search')) {
+                this.search = (route.query['search'] || '').toLowerCase();
+            }
     
             Promise.allSettled(requests)
                 .then(results => {

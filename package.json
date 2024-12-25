@@ -14,9 +14,14 @@
     "nuxt": "^3.14.1592",
     "pinia": "^2.3.0",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "xml2js": "^0.6.2"
   },
   "overrides": {
     "vue": "latest"
+  },
+  "devDependencies": {
+    "sass": "^1.83.0",
+    "sass-loader": "^16.0.4"
   }
 }

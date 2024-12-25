@@ -74,12 +74,13 @@ import { storeToRefs } from 'pinia';
             display: flex;
             justify-content: center;
             align-items: center;
-            min-width: 30%;
+            max-width: 30%;
             height: 100%;
             margin-bottom: 20px;
 
             @media all and (max-width: 950px) {
                 margin-bottom: 0px;
+                max-width: 100%;
             }
 
             img {
